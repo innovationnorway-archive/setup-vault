@@ -1,32 +1,41 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "setup-vault",
+  "version": "0.1.0",
   "private": true,
-  "description": "TypeScript template action",
-  "main": "lib/main.js",
+  "description": "setup vault action",
+  "main": "lib/setup-vault.js",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/volcano-coffee-company/setup-vault.git"
   },
   "keywords": [
     "actions",
-    "node",
+    "vault",
     "setup"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "volcano-coffee-company",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.0"
+    "@actions/core": "^1.2.0",
+    "@actions/exec": "^1.0.1",
+    "@actions/github": "^1.1.0",
+    "@actions/io": "^1.0.1",
+    "@actions/tool-cache": "^1.1.2",
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.4",
+    "@types/semver": "^6.0.0",
     "jest": "^24.8.0",
     "jest-circus": "^24.7.1",
+    "prettier": "^1.19.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"
   }
