@@ -1,25 +1,30 @@
-name: Main workflow
-on: [push]
+name: "build-test"
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - master
+
 jobs:
-  run:
-    name: Run
+  build: # make sure build/ci work properly
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
+        operating-system: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
-    - uses: actions/checkout@master
-    
-    - name: Set Node.js 10.x
-      uses: actions/setup-node@master
-      with:
-        version: 10.x
-
-    - name: npm install
-      run: npm install
-
-    - name: Lint
-      run: npm run format-check
-
-    - name: npm test
-      run: npm test
+    - uses: actions/checkout@v2
+    - run: |
+        npm install
+        npm run all
+    - name: audit security
+      continue-on-error: true
+      run: npm audit --audit-level=moderate
+      if: matrix.operating-system == 'ubuntu-latest'
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      with: 
+        version: '>= 1.4'
+    - run: vault version
