@@ -43,7 +43,7 @@ async function queryLatestMatch(versionSpec: string): Promise<string> {
       const supportedBuild = version.builds.find(
         build => osPlat === build.os && osArch === build.arch
       )
-      if (supportedBuild) {
+      if (supportedBuild && semver.valid(supportedBuild.version)) {
         versions.push(supportedBuild.version)
       }
     }
